@@ -1,0 +1,10 @@
+<% if User.current != User.anonymous and not User.current.projects.empty? %>
+    <% if not (@custom_queries = sidebar_queries()).nil? %>
+      <div class="box">
+          <h3 class="icon22 icon22-projects">Global Filters</h3>
+          <% @custom_queries.each do |query| %>
+        	<%= link_to(h(query.name), :controller => "global_filter", :action => "find_filter_issues", :query_id => query) %><br />
+          <% end %>
+      </div>
+  <% end %>   
+  <% end %>

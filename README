@@ -1,0 +1,24 @@
+Global Filter Plugin
+  This plugin is built to display a list of "global" filters on your Redmine homepage, for easy access to issues that satisfy the filters across your projects.
+
+Background:
+
+Filters:
+
+  Filters are queries that are used to filter issues pertaining to a project or all issues across projects. These filters can be created using the 'Add Filter' UI in the 'Filters' block above the issue list in the 'View all issues'/ the Issues page of any project. And saved with a name for future use by everyone, in the case of a 'public' filter, or by yourself when otherwise.
+
+Global Filters:
+
+  Global filters are those queries(filters) that you create that are public and/or apply to all projects. When marked public, these filters are made available on other user's global filter list on the Redmine homepage.
+  
+
+Functionality:
+
+The crux of this plugin lies in the filter list that is displayed in the homepage (http://www.flickr.com/photos/7318709@N08/3790982185). The list consists of links corresponding to global filters available to you. i.e. links you created yourelf that apply to all projects, or ones that were marked public by others that apply to all projects.
+
+Clicking on these links take you to a view of the issues that satisfy the filter from all your projects.The issue list is categorized according to projects they belong to (http://www.flickr.com/photos/7318709@N08/3790972041).
+
+On the issue list page, the sidebar(RHS) has a 'Filter by Projects' block that can be used to filter the issue list display to only a subset of the projects you belong to. The default is to show all projects.
+
+The sidebar also has the 'Custom Queries' block that lists all the global filters listed in the homepage.
+

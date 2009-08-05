@@ -1,0 +1,97 @@
+
+
+<h2><%=h @query.name %></h2>
+<% if @issues.nil? or @issues.empty? %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% else %>
+<% prev_proj_id = @issues[0].project_id %>
+<% p_name = Project.find(prev_proj_id).name %>
+<% proj_names = [] %>
+<% proj_names << p_name %>
+<div id="proj_<%= p_name %>">
+	<h2><%= p_name %></h2>
+	<table class="list issues">
+		<thead><tr>
+		<%= content_tag('th', '#') %>
+        <% @query.columns.each do |column| %>
+          <%= content_tag('th', column.caption) %>
+        <% end %>
+		</tr></thead>
+		
+<% @issues.each do |i| %>
+	<% if i.project_id != prev_proj_id %>
+		<% prev_proj_id = i.project_id %>
+		<% p_name = Project.find(prev_proj_id).name %>
+		<% proj_names << p_name %>
+			</table>
+			</div>
+			<div id="proj_<%= p_name %>">
+				<h2><%= p_name %></h2>
+				<table class="list issues">
+					<thead><tr>
+	        
+			<%= content_tag('th', '#') %>
+	        <% @query.columns.each do |column| %>
+	          <%= content_tag('th', column.caption) %>
+	        <% end %>
+		</tr></thead>	
+	<% end %>
+	<tr id="issue-<%= i.id %>" class="hascontextmenu <%= cycle('odd', 'even') %> <%= i.css_classes %>">
+		<td><%= link_to i.id, :controller => 'issues', :action => 'show', :id => i %></td>
+        <% @query.columns.each do |column| %><%= content_tag 'td', column_content(column, i), :class => column.name %><% end %>
+	</tr>
+<% end %>
+</table>
+</div>
+<% end %>
+
+<% content_for :sidebar do %>
+    <%= render :partial => 'global_filter/sidebar' %>
+	<% if not @issues.empty? %>
+	<h3><%= "Filter by Projects" %></h3>
+	<form id="projList">
+	<% proj_names.each do |proj| -%>
+	<input type="checkbox" class="proj_check" id="project_<%= proj%>"  name="<%= proj%>" onchange="toggleFilterDiv(this);" checked=true /> <%= proj%><br /><% end -%>
+	</form>
+	<% end %>
+<% end %>
+
+<script type="text/javascript">
+	
+	function toggleFilterDiv(element){
+		if (element.checked){
+			if($('proj_'+element.name)!=null) {
+				$('proj_'+element.name).style.display = 'block';
+			} 
+		}
+		else {
+			if($('proj_'+element.name)!=null) {
+				$('proj_'+element.name).style.display = 'none';
+			} 
+			checkNoSelection();
+		}
+	}
+	
+	function checkNoSelection() {
+		var form =  $('projList');
+		var count = 0;
+		for( var i=0; i<form.length; i++ ) { 
+			if(!form.elements[i].checked) {
+				count += 1; 
+			}
+			else {
+				break;
+			}
+		}
+		if(count == form.length) {
+			for (var i = 0; i < form.length; i++) {
+				form.elements[i].checked = true;
+				if($('proj_'+form.elements[i].name)!=null) {
+					$('proj_'+form.elements[i].name).style.display = 'block';
+				}
+			}
+		}
+	}
+	
+</script>
+
