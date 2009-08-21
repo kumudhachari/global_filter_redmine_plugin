@@ -36,7 +36,7 @@
 	        <% end %>
 		</tr></thead>	
 	<% end %>
-	<tr id="issue-<%= i.id %>" class="hascontextmenu <%= cycle('odd', 'even') %> <%= i.css_classes %>">
+	<tr id="issue-<%= i.id %>" class="hascontextmenu <%= cycle('odd', 'even') %> <%= i.respond_to?(:css_classes) ? i.css_classes : css_issue_classes(i) %>">
 		<td><%= link_to i.id, :controller => 'issues', :action => 'show', :id => i %></td>
         <% @query.columns.each do |column| %><%= content_tag 'td', column_content(column, i), :class => column.name %><% end %>
 	</tr>
